@@ -71,7 +71,7 @@ function generalCollater (library, set_code, count, user, style){	//print out pr
 				}
 			}
 			
-			let ratio = commCLRatio(library, gcr);		//ratio for making non-mono colors more common to offset making monos more common
+			let ratio = correctCXRatio(library, gcr);//ratio for making non-mono colors more common to offset making monos more common
 			let addCounter = 5+Math.ceil(ratio);		//how many guaranteed slots added
 			if(slotInfo[gcs].length >= addCounter) {
 				let cArray = ["c=w", "c=u", "c=b", "c=r", "c=g", "-c=1"];
@@ -373,28 +373,26 @@ function doesPackContain(packArray, library, cb) {					//check if any card in th
 	}
 	return false;
 }
-function commCLRatio(library, rarity) {								//approximate ratio to correct for non-monocolored cards
-	let colors = {
-		"{White} ": 0,
-		"{Blue} ": 0,
-		"{Black} ": 0,
-		"{Red} ": 0,
-		"{Green} ": 0,
-		"not mono": 0,
-	}
+function correctCXRatio(library, rarity) {
+	/*
+		When adding a card of each color, the ratio of non-mono / mono cards gets screwed up
+		add the original ratio of non-mono slots to put it back on balance
+	*/
+	let colors = ["{White} ","{Blue} ","{Black} ","{Red} ","{Green} "];
+	let Xc = 0;
+	let Sc = 0;
 	for(let card in library.cards) {
 		let thisCard = library.cards[card];
 		if(thisCard.rarity == rarity) {
-			let ent = "not mono";
-			if(colors.hasOwnProperty(thisCard.color))
-				ent = thisCard.color;
-			colors[ent]++;
+			if(!colors.includes(thisCard.color))
+				Xc++;
+			Sc++;
 		}
 	}
-	let avg = (colors["{White} "] + colors["{Blue} "] + colors["{Black} "] + colors["{Red} "] + colors["{Green} "]) / 5;
-	if(avg <= 0)
+	if(Xc == Sc)
 		return 0;
-	return Math.pow(colors["not mono"] / avg, 2);
+	let corr = Xc/((Sc-Xc)/5);
+	return corr;
 }
 function determineRarityInSet(set_code, library) {					//number of cards of each rarity in a set
 	let rarities = {
