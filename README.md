@@ -4,7 +4,8 @@ This contains the code that LackeyBot runs for customized pack collation (packSl
 
 `packgen` generates packSlots code from user input strings, for example
 
-```9x Common
+```
+9x Common
 
 3x Uncommon
 
@@ -12,7 +13,8 @@ This contains the code that LackeyBot runs for customized pack collation (packSl
 
 1x DFC
 
-1x Foil```
+1x Foil
+```
 
 `collator` generates arrays of card names (packs) from packSlots
 
