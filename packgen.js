@@ -95,11 +95,11 @@ var slotMachine = {
 	"rare/mythic": [["r=m","r=r"], [0.135,0.865]],
 	//dfc slots
 	"dfc": [["is:transform"], [1]],
-	"cudfc": [["(r=c or r=u) is:transform"], [1]]
-	"rmdfc": [["(r=r or r=m) is:transform"], [1], "else", 0, 0.125, false],
+	"cudfc": [["r=u is:transform", "r=c is:transform"], [0.66,0.34]],
+	"rmdfc": [["r=m is:transform", "r=r is:transform"], [0.2, 0.8], "else", 0, 0.125, false],
 	//shifted slots
 	"shifted common": [["r=c is:shifted"], [1]],
-	"shifted unc/rare": [["r=u is:shifted", "r=r is:shifted"], [0.666, 0.333]]
+	"shifted unc/rare": [["r=u is:shifted", "r=r is:shifted"], [0.666, 0.333]],
 	"shifted": [["is:shifted"], [1]],
 	//other canon slots
 	"unclegend": [["r=u t:Legendary"], [1]],
@@ -120,7 +120,6 @@ function builtInSlots (slot) { //codes for built in slots
 	return [];
 }
 function builtInPacks(pack) { //codes for built in packs
-	let func;
 	let func;
 	switch(pack) {
 		case "oldmythicratio":
