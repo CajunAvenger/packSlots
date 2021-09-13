@@ -51,7 +51,7 @@ function generalCollater (library, set_code, count, user, style){	//print out pr
 		if(style == "modified") {
 			//check rarity of most common card
 			let gcr = "common";
-			let gcrcheck = gcr.match(/r=([curmsbl])/i);
+			let gcrcheck = gcfilter.match(/r=([curmsbl])/i);
 			if(gcrcheck) {
 				let rarNames = {
 					"c": "common",
